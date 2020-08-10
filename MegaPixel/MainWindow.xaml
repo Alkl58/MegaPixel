@@ -1,0 +1,330 @@
+﻿<Window x:Class="MegaPixel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MegaPixel"
+        mc:Ignorable="d"
+        Title="MegaPixel" Height="456.934" Width="583.604" ResizeMode="CanMinimize">
+    <Grid>
+
+        <Button x:Name="ButtonOpenSource" Content="Open Source" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonOpenSource_Click"/>
+        <Button x:Name="ButtonSaveTo" Content="Save to..." HorizontalAlignment="Left" Margin="113,10,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonSaveTo_Click"/>
+        <Button x:Name="ButtonStartEncoding" Content="Start Encoding" HorizontalAlignment="Left" Margin="464,15,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonStartEncoding_Click"/>
+        <CheckBox x:Name="CheckBoxBatchEncoding" Content="Batch Add Pictures" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
+        <ProgressBar x:Name="ProgressBar" HorizontalAlignment="Left" Height="27" Margin="10,383,0,0" VerticalAlignment="Top" Width="552"/>
+        <Label x:Name="LabelProgressbar" Content="" HorizontalAlignment="Left" Margin="10,383,0,0" VerticalAlignment="Top" Width="552" Height="27" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="TextBoxWorkerCount" HorizontalAlignment="Left" Height="26" Margin="331,15,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="37" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Parallel Workers:" HorizontalAlignment="Left" Margin="228,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,0.578"/>
+        <TabControl HorizontalAlignment="Left" Height="297" Margin="10,81,0,0" VerticalAlignment="Top" Width="552">
+            <TabItem Header="Queue">
+                <Grid Background="White">
+                    <ListBox x:Name="ListBoxImagesToConvert" HorizontalAlignment="Left" BorderBrush="Gray" Height="240" VerticalAlignment="Top" Width="546" Margin="0,29,0,-0.2"/>
+                    <Button Content="Remove" HorizontalAlignment="Left" Margin="479,5,0,0" VerticalAlignment="Top" Width="67" Background="White" Height="19"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Settings">
+                <Grid Background="White">
+                    <ComboBox x:Name="ComboBoxEncoder" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top" Width="68" Height="26">
+                        <ComboBoxItem Content="avif" IsSelected="True"/>
+                        <ComboBoxItem Content="webp" />
+                        <ComboBoxItem Content="jpegxl"/>
+                        <ComboBoxItem Content="mozjpg"/>
+                        <ComboBoxItem Content="ect"/>
+                    </ComboBox>
+                    <Label Content="Encoder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Threads:" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <TextBox x:Name="TextBoxAvifThreads" HorizontalAlignment="Left" Height="26" Margin="71,82,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                        <TextBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <CheckBox x:Name="CheckBoxAvifLossless" Content="Lossless" HorizontalAlignment="Left" Margin="169,14,0,0" VerticalAlignment="Top">
+                        <CheckBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
+                    <Label Content="Depth:" HorizontalAlignment="Left" Margin="10,121,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxAvifDepth" HorizontalAlignment="Left" Margin="71,121,0,0" VerticalAlignment="Top" Width="68" Height="26">
+                        <ComboBoxItem Content="8" IsSelected="True"/>
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="12"/>
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <Label Content="Color Format:" HorizontalAlignment="Left" Margin="169,121,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <Label Content="Speed:" HorizontalAlignment="Left" Margin="169,82,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxAvifSpeed" HorizontalAlignment="Left" Margin="252,82,0,0" VerticalAlignment="Top" Width="68" Height="26" ToolTip="Encoder speed (0-10, slowest-fastest) ">
+                        <ComboBoxItem Content="0"/>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBoxItem Content="7"/>
+                        <ComboBoxItem Content="8" IsSelected="True"/>
+                        <ComboBoxItem Content="9"/>
+                        <ComboBoxItem Content="10"/>
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <ComboBox x:Name="ComboBoxAvifColorFormat" HorizontalAlignment="Left" Margin="252,121,0,0" VerticalAlignment="Top" Width="68" Height="26">
+                        <ComboBoxItem Content="444" IsSelected="True"/>
+                        <ComboBoxItem Content="422"/>
+                        <ComboBoxItem Content="420"/>
+                        <ComboBoxItem Content="400"/>
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <Label Content="Range:" HorizontalAlignment="Left" Margin="358,121,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxAvifColorRange" HorizontalAlignment="Left" Margin="409,121,0,0" VerticalAlignment="Top" Width="68" Height="26">
+                        <ComboBoxItem Content="full" IsSelected="True"/>
+                        <ComboBoxItem Content="limited"/>
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <TextBox x:Name="TextBoxCustomSettings" HorizontalAlignment="Left" Height="49" Margin="10,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="526"/>
+                    <Label Content="Min Q:" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <TextBox x:Name="TextBoxAvifMinQ" HorizontalAlignment="Left" Height="26" Margin="71,46,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                        <TextBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <Label Content="Max Q:" HorizontalAlignment="Left" Margin="169,46,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <TextBox x:Name="TextBoxAvifMaxQ" HorizontalAlignment="Left" Height="26" Margin="252,47,0,0" TextWrapping="Wrap" Text="63" VerticalAlignment="Top" Width="68" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                        <TextBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <Label Content="Tile-Rows:" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxAvifTileRows" HorizontalAlignment="Left" Margin="71,159,0,0" VerticalAlignment="Top" Width="68" Height="26">
+                        <ComboBoxItem Content="0" IsSelected="True"/>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <Label Content="Tile-Columns:" HorizontalAlignment="Left" Margin="169,159,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxAvifTileColumns" HorizontalAlignment="Left" Margin="251,159,0,0" VerticalAlignment="Top" Width="68" Height="26">
+                        <ComboBoxItem Content="0" IsSelected="True"/>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="0">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+                    <CheckBox x:Name="CheckBoxCustomSettings" Content="Custom Settings" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Checked="CheckBoxCustomSettings_Checked"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Program Settings">
+                <Grid Background="White">
+                    <Label Content="Version: 0.1" Margin="399,10,10.4,230.8"/>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</Window>
