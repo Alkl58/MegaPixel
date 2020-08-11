@@ -12,7 +12,7 @@ namespace MegaPixel
 {
     public partial class MainWindow : Window
     {
-        public string imageOutput, encoder, allSettingsLibavif;
+        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp;
         public int workerCount, imageChunksCount;
         public bool imageOutputSet;
         public MainWindow()
@@ -27,6 +27,7 @@ namespace MegaPixel
             {
                 ProgressBar.Value = 0;
                 ProgressBar.Maximum = imageChunksCount;
+                LabelProgressbar.Content = "0 / " + imageChunksCount;
                 await Task.Run(() => ParallelEncode());
             }
             catch { }
@@ -45,6 +46,7 @@ namespace MegaPixel
         private void CheckBoxCustomSettings_Checked(object sender, RoutedEventArgs e)
         {
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(true); TextBoxCustomSettings.Text = allSettingsLibavif; }
+            if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
         }
 
         private void ButtonOpenSource_Click(object sender, RoutedEventArgs e)
@@ -71,6 +73,15 @@ namespace MegaPixel
 
         }
 
+        private void ButtonRemoveFromList_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ListBoxImagesToConvert.Items.RemoveAt(ListBoxImagesToConvert.SelectedIndex);
+            }
+            catch { }
+        }
+
         private void setParams()
         {
             encoder = ComboBoxEncoder.Text;
@@ -81,6 +92,7 @@ namespace MegaPixel
                 imageChunksCount += 1;
             }
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(false); }
         }
 
         private void SetLibavifParams(bool temp)
@@ -91,9 +103,38 @@ namespace MegaPixel
             }
             else
             {
-                allSettingsLibavif = " --speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --min " + TextBoxAvifMinQ.Text + " --max " + TextBoxAvifMaxQ.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text + " ";
+                if (CheckBoxAvifLossless.IsChecked == true)
+                {
+                    allSettingsLibavif = " --lossless --speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text + " ";
+                }
+                else
+                {
+                    allSettingsLibavif = " --speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --min " + TextBoxAvifMinQ.Text + " --max " + TextBoxAvifMaxQ.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text + " ";
+                }
             }
-            
+        }
+
+        private void SetWebpParams(bool temp)
+        {
+            if (CheckBoxCustomSettings.IsChecked == true && temp == false)
+            {
+                allSettingsWebp = TextBoxCustomSettings.Text;
+            }
+            else
+            {
+                if (CheckBoxAvifLossless.IsChecked == true)
+                {
+                    allSettingsWebp = " -preset " + ComboBoxWebpPreset.Text + " -lossless -m " + ComboBoxWebpSpeed.SelectedIndex + " ";
+                }
+                else
+                {
+                    allSettingsWebp = " -preset " + ComboBoxWebpPreset.Text + " -q " + TextBoxWebpQuality.Text + " -m " + ComboBoxWebpSpeed.SelectedIndex + " ";
+                }
+                if (CheckBoxWebpMultiThreading.IsChecked == true)
+                {
+                    allSettingsWebp += "-mt ";
+                }
+            }
         }
 
         private void ParallelEncode()
@@ -130,6 +171,10 @@ namespace MegaPixel
                                 case "avif":
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "avif");
                                     startInfo.Arguments = "/C avifenc.exe " + '\u0022' + items + '\u0022' + allSettingsLibavif + '\u0022' + imageOutputTemp + "avif" + '\u0022';
+                                    break;
+                                case "webp":
+                                    startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "webp");
+                                    startInfo.Arguments = "/C cwebp.exe " + allSettingsWebp + '\u0022' + items + '\u0022' + " -o " + '\u0022' + imageOutputTemp + "webp" + '\u0022';
                                     break;
                                 default:
                                     break;
