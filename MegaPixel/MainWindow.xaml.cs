@@ -12,7 +12,7 @@ namespace MegaPixel
 {
     public partial class MainWindow : Window
     {
-        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl, allSettingsMozjpeg;
+        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl, allSettingsMozjpeg, allSettingsEct;
         public int workerCount, imageChunksCount;
         public bool imageOutputSet;
         public MainWindow()
@@ -49,6 +49,7 @@ namespace MegaPixel
             if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
             if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(true); TextBoxCustomSettings.Text = allSettingsJpegxl; }
             if (ComboBoxEncoder.SelectedIndex == 4) { SetMozjpegParams(true); TextBoxCustomSettings.Text = allSettingsMozjpeg; }
+            if (ComboBoxEncoder.SelectedIndex == 5) { SetEctParams(true); TextBoxCustomSettings.Text = allSettingsEct; }
         }
 
         private void ButtonOpenSource_Click(object sender, RoutedEventArgs e)
@@ -110,7 +111,8 @@ namespace MegaPixel
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(false); }
             if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(false); }
             if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(false); }
-            if (ComboBoxEncoder.SelectedIndex == 2) { SetMozjpegParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 4) { SetMozjpegParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 5) { SetEctParams(false); }
         }
 
         private void SetLibavifParams(bool temp)
@@ -179,6 +181,18 @@ namespace MegaPixel
             }
         }
 
+        private void SetEctParams(bool temp)
+        {
+            if (CheckBoxCustomSettings.IsChecked == true && temp == false)
+            {
+                allSettingsEct = TextBoxCustomSettings.Text;
+            }
+            else
+            {
+                allSettingsEct = "-" + ComboBoxEctCompressionLevel.Text;
+            }
+        }
+
         private void ParallelEncode()
         {
             using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(workerCount))
@@ -230,10 +244,14 @@ namespace MegaPixel
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "mozjpeg");
                                     startInfo.Arguments = "/C cjpeg.exe " + allSettingsMozjpeg + " " +'\u0022' + items + '\u0022' + " > " + '\u0022' + imageOutputTemp + "jpg" + '\u0022';
                                     break;
+                                case "ect":
+                                    startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "ect");
+                                    startInfo.Arguments = "/C ect.exe " + allSettingsEct + " " + '\u0022' + items + '\u0022';
+                                    break;
                                 default:
                                     break;
                             }
-                            //Console.WriteLine(startInfo.Arguments);
+                            Console.WriteLine(startInfo.Arguments);
                             process.StartInfo = startInfo;
                             process.Start();
                             process.WaitForExit();

@@ -48,6 +48,7 @@
                         <ComboBoxItem Content="jpegxl"/>
                         <ComboBoxItem Content="jpegxl decoder"/>
                         <ComboBoxItem Content="mozjpeg"/>
+                        <ComboBoxItem Content="ect"/>
                     </ComboBox>
                     <Label Content="Encoder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     <Label Content="Threads:" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top">
@@ -491,6 +492,54 @@
                         <ComboBoxItem Content="8"/>
                         <ComboBoxItem Content="9"/>
                     </ComboBox>
+                    <Label Content="Compression Level:" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxEctCompressionLevel" HorizontalAlignment="Left" Margin="132,54,0,0" VerticalAlignment="Top" Width="49" Height="26">
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                        <ComboBoxItem Content="1"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3" IsSelected="True"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBoxItem Content="7"/>
+                        <ComboBoxItem Content="8"/>
+                        <ComboBoxItem Content="9"/>
+                    </ComboBox>
+                    <Label Content="Attention!: ECT will modify the original files!" HorizontalAlignment="Left" Margin="208,10,0,0" VerticalAlignment="Top" Foreground="Red">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
                 </Grid>
             </TabItem>
             <TabItem Header="Program">
