@@ -12,7 +12,7 @@ namespace MegaPixel
 {
     public partial class MainWindow : Window
     {
-        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp;
+        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl;
         public int workerCount, imageChunksCount;
         public bool imageOutputSet;
         public MainWindow()
@@ -47,6 +47,7 @@ namespace MegaPixel
         {
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(true); TextBoxCustomSettings.Text = allSettingsLibavif; }
             if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
+            if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(true); TextBoxCustomSettings.Text = allSettingsJpegxl; }
         }
 
         private void ButtonOpenSource_Click(object sender, RoutedEventArgs e)
@@ -93,6 +94,7 @@ namespace MegaPixel
             }
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(false); }
             if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(false); }
         }
 
         private void SetLibavifParams(bool temp)
@@ -105,11 +107,11 @@ namespace MegaPixel
             {
                 if (CheckBoxAvifLossless.IsChecked == true)
                 {
-                    allSettingsLibavif = " --lossless --speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text + " ";
+                    allSettingsLibavif = "--lossless --speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text;
                 }
                 else
                 {
-                    allSettingsLibavif = " --speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --min " + TextBoxAvifMinQ.Text + " --max " + TextBoxAvifMaxQ.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text + " ";
+                    allSettingsLibavif = "--speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --min " + TextBoxAvifMinQ.Text + " --max " + TextBoxAvifMaxQ.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text;
                 }
             }
         }
@@ -124,16 +126,28 @@ namespace MegaPixel
             {
                 if (CheckBoxAvifLossless.IsChecked == true)
                 {
-                    allSettingsWebp = " -preset " + ComboBoxWebpPreset.Text + " -lossless -m " + ComboBoxWebpSpeed.SelectedIndex + " ";
+                    allSettingsWebp = "-preset " + ComboBoxWebpPreset.Text + " -lossless -m " + ComboBoxWebpSpeed.SelectedIndex;
                 }
                 else
                 {
-                    allSettingsWebp = " -preset " + ComboBoxWebpPreset.Text + " -q " + TextBoxWebpQuality.Text + " -m " + ComboBoxWebpSpeed.SelectedIndex + " ";
+                    allSettingsWebp = "-preset " + ComboBoxWebpPreset.Text + " -q " + TextBoxWebpQuality.Text + " -m " + ComboBoxWebpSpeed.SelectedIndex;
                 }
                 if (CheckBoxWebpMultiThreading.IsChecked == true)
                 {
-                    allSettingsWebp += "-mt ";
+                    allSettingsWebp += " -mt";
                 }
+            }
+        }
+
+        private void SetJpegxlParams(bool temp)
+        {
+            if (CheckBoxCustomSettings.IsChecked == true && temp == false)
+            {
+                allSettingsJpegxl = TextBoxCustomSettings.Text;
+            }
+            else
+            {
+                allSettingsJpegxl = "-q " + TextBoxJpegxlQuality.Text + " -s " + ComboBoxJpegxlSpeed.Text;
             }
         }
 
@@ -170,11 +184,19 @@ namespace MegaPixel
                             {
                                 case "avif":
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "avif");
-                                    startInfo.Arguments = "/C avifenc.exe " + '\u0022' + items + '\u0022' + allSettingsLibavif + '\u0022' + imageOutputTemp + "avif" + '\u0022';
+                                    startInfo.Arguments = "/C avifenc.exe " + '\u0022' + items + '\u0022' + " " + allSettingsLibavif + " " + '\u0022' + imageOutputTemp + "avif" + '\u0022';
                                     break;
                                 case "webp":
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "webp");
-                                    startInfo.Arguments = "/C cwebp.exe " + allSettingsWebp + '\u0022' + items + '\u0022' + " -o " + '\u0022' + imageOutputTemp + "webp" + '\u0022';
+                                    startInfo.Arguments = "/C cwebp.exe " + allSettingsWebp + " " + '\u0022' + items + '\u0022' + " -o " + '\u0022' + imageOutputTemp + "webp" + '\u0022';
+                                    break;
+                                case "jpegxl":
+                                    startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "jpegxl");
+                                    startInfo.Arguments = "/C cjpegxl.exe " + '\u0022' + items + '\u0022' + " " + '\u0022' + imageOutputTemp + "jxl" + '\u0022' + " " + allSettingsJpegxl;
+                                    break;
+                                case "jpegxl decoder":
+                                    startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "jpegxl");
+                                    startInfo.Arguments = "/C djpegxl.exe " + '\u0022' + items + '\u0022' + " " + '\u0022' + imageOutputTemp + "png" + '\u0022';
                                     break;
                                 default:
                                     break;
