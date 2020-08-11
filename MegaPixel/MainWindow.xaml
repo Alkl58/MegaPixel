@@ -34,15 +34,20 @@
                       Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Label.Style>
                     </Label>
-                    <ComboBox x:Name="ComboBoxEncoder" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top" Width="110" Height="26">
+                    <ComboBox x:Name="ComboBoxEncoder" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top" Width="110" Height="26" SelectionChanged="ComboBoxEncoder_SelectionChanged">
                         <ComboBoxItem Content="avif" IsSelected="True"/>
                         <ComboBoxItem Content="webp"/>
                         <ComboBoxItem Content="jpegxl"/>
                         <ComboBoxItem Content="jpegxl decoder"/>
+                        <ComboBoxItem Content="mozjpeg"/>
                     </ComboBox>
                     <Label Content="Encoder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                     <Label Content="Threads:" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top">
@@ -339,6 +344,10 @@
                                 <Style.Triggers>
                                     <DataTrigger
                       Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>

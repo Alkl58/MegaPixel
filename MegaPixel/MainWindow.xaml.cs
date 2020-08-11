@@ -12,7 +12,7 @@ namespace MegaPixel
 {
     public partial class MainWindow : Window
     {
-        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl;
+        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl, allSettingsMozjpeg;
         public int workerCount, imageChunksCount;
         public bool imageOutputSet;
         public MainWindow()
@@ -48,6 +48,7 @@ namespace MegaPixel
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(true); TextBoxCustomSettings.Text = allSettingsLibavif; }
             if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
             if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(true); TextBoxCustomSettings.Text = allSettingsJpegxl; }
+            if (ComboBoxEncoder.SelectedIndex == 4) { SetMozjpegParams(true); TextBoxCustomSettings.Text = allSettingsMozjpeg; }
         }
 
         private void ButtonOpenSource_Click(object sender, RoutedEventArgs e)
@@ -83,6 +84,20 @@ namespace MegaPixel
             catch { }
         }
 
+        private void ComboBoxEncoder_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (ComboBoxEncoder.SelectedIndex == 4) 
+            {  
+                foreach (var element in ListBoxImagesToConvert.Items)
+                {
+                    if (Path.GetExtension(element.ToString()) != "jpg" )
+                    {
+                        MessageBox.Show("You have elements in the Queue, which are not jpg/jpg. \n\nMozJpeg is only reduces file sizes of JPEG images! \n\nPlease check your Queue and remove non jpeg elements.");
+                    }
+                }
+            }
+        }
+
         private void setParams()
         {
             encoder = ComboBoxEncoder.Text;
@@ -95,6 +110,7 @@ namespace MegaPixel
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(false); }
             if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(false); }
             if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 2) { SetMozjpegParams(false); }
         }
 
         private void SetLibavifParams(bool temp)
@@ -151,6 +167,18 @@ namespace MegaPixel
             }
         }
 
+        private void SetMozjpegParams(bool temp)
+        {
+            if (CheckBoxCustomSettings.IsChecked == true && temp == false)
+            {
+                allSettingsMozjpeg = TextBoxCustomSettings.Text;
+            }
+            else
+            {
+                allSettingsMozjpeg = "-quality " + TextBoxWebpQuality.Text;
+            }
+        }
+
         private void ParallelEncode()
         {
             using (SemaphoreSlim concurrencySemaphore = new SemaphoreSlim(workerCount))
@@ -198,10 +226,14 @@ namespace MegaPixel
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "jpegxl");
                                     startInfo.Arguments = "/C djpegxl.exe " + '\u0022' + items + '\u0022' + " " + '\u0022' + imageOutputTemp + "png" + '\u0022';
                                     break;
+                                case "mozjpeg":
+                                    startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "mozjpeg");
+                                    startInfo.Arguments = "/C cjpeg.exe " + allSettingsMozjpeg + " " +'\u0022' + items + '\u0022' + " > " + '\u0022' + imageOutputTemp + "jpg" + '\u0022';
+                                    break;
                                 default:
                                     break;
                             }
-                            Console.WriteLine(startInfo.Arguments);
+                            //Console.WriteLine(startInfo.Arguments);
                             process.StartInfo = startInfo;
                             process.Start();
                             process.WaitForExit();
