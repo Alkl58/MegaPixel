@@ -1,9 +1,7 @@
 # MegaPixel
 GUI for avif, webp, jpegxl, mozjpg and ect
 
-
-## Until this notice does not disappear, this program is still too early in development to be used!
-
+![image](https://i.imgur.com/Cq5JgUe.png)
 
 ### System Requirements:
 - [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework/net472)
