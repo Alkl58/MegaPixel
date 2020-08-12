@@ -15,6 +15,7 @@ namespace MegaPixel
         public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl, allSettingsMozjpeg, allSettingsEct;
         public int workerCount, imageChunksCount;
         public bool imageOutputSet;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -87,11 +88,11 @@ namespace MegaPixel
 
         private void ComboBoxEncoder_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (ComboBoxEncoder.SelectedIndex == 4) 
-            {  
+            if (ComboBoxEncoder.SelectedIndex == 4)
+            {
                 foreach (var element in ListBoxImagesToConvert.Items)
                 {
-                    if (Path.GetExtension(element.ToString()) != "jpg" )
+                    if (Path.GetExtension(element.ToString()) != "jpg")
                     {
                         MessageBox.Show("You have elements in the Queue, which are not jpg/jpg. \n\nMozJpeg is only reduces file sizes of JPEG images! \n\nPlease check your Queue and remove non jpeg elements.");
                     }
@@ -142,7 +143,11 @@ namespace MegaPixel
             }
             else
             {
-                if (CheckBoxAvifLossless.IsChecked == true)
+                if (CheckBoxWebpNearLossless.IsChecked == true)
+                {
+                    allSettingsWebp = "-preset " + ComboBoxWebpPreset.Text + " -near_lossless " + TextBoxWebpNearLossless.Text + " -z " + ComboBoxWebpLosslessPreset.Text;
+                }
+                else if (CheckBoxAvifLossless.IsChecked == true)
                 {
                     allSettingsWebp = "-preset " + ComboBoxWebpPreset.Text + " -lossless -m " + ComboBoxWebpSpeed.SelectedIndex;
                 }
@@ -190,6 +195,22 @@ namespace MegaPixel
             else
             {
                 allSettingsEct = "-" + ComboBoxEctCompressionLevel.Text;
+            }
+        }
+
+        private void CheckImageOutput(string Path)
+        {
+            if (CheckBoxRemoveFinishedItems.IsChecked == true)
+            {
+                if (File.Exists(Path))
+                {
+                    try
+                    {
+                        ListBoxImagesToConvert.Items.Remove(Path);
+                    }
+                    catch { }
+                    
+                }
             }
         }
 
@@ -251,10 +272,11 @@ namespace MegaPixel
                                 default:
                                     break;
                             }
-                            Console.WriteLine(startInfo.Arguments);
+                            //Console.WriteLine(startInfo.Arguments);
                             process.StartInfo = startInfo;
                             process.Start();
                             process.WaitForExit();
+                            LabelProgressbar.Dispatcher.Invoke(() => CheckImageOutput(items.ToString()), DispatcherPriority.Background);
                         }
                         finally
                         {
