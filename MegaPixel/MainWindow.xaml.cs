@@ -14,7 +14,7 @@ namespace MegaPixel
     {
         public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl, allSettingsMozjpeg, allSettingsEct;
         public int workerCount, imageChunksCount;
-        public bool imageOutputSet;
+        public bool imageOutputSet, wrongFormat;
 
         public MainWindow()
         {
@@ -92,12 +92,11 @@ namespace MegaPixel
             {
                 foreach (var element in ListBoxImagesToConvert.Items)
                 {
-                    if (Path.GetExtension(element.ToString()) != "jpg")
-                    {
-                        MessageBox.Show("You have elements in the Queue, which are not jpg/jpg. \n\nMozJpeg is only reduces file sizes of JPEG images! \n\nPlease check your Queue and remove non jpeg elements.");
-                    }
+                    if (Path.GetExtension(element.ToString()) != "jpg") { wrongFormat = true; }
                 }
+                if (wrongFormat){ MessageBox.Show("You have elements in the Queue, which are not jpg/jpg. \n\nMozJpeg is only reduces file sizes of JPEG images! \n\nPlease check your Queue and remove non jpeg elements."); }
             }
+            wrongFormat = false;
         }
 
         private void setParams()
