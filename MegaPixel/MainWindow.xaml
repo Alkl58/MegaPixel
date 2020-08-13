@@ -48,7 +48,7 @@
                         <ComboBoxItem Content="webp"/>
                         <ComboBoxItem Content="jpegxl"/>
                         <ComboBoxItem Content="jpegxl decoder"/>
-                        <ComboBoxItem Content="mozjpeg"/>
+                        <ComboBoxItem Content="mozjpeg" />
                         <ComboBoxItem Content="ect"/>
                     </ComboBox>
                     <Label Content="Encoder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -548,10 +548,6 @@
                                 <Style.Triggers>
                                     <DataTrigger
                                         Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
-                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
-                                    </DataTrigger>
-                                    <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
