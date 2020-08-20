@@ -21,84 +21,6 @@ namespace MegaPixel
             InitializeComponent();
         }
 
-        private async void ButtonStartEncoding_Click(object sender, RoutedEventArgs e)
-        {
-            setParams();
-            try
-            {
-                ProgressBar.Value = 0;
-                ProgressBar.Maximum = imageChunksCount;
-                LabelProgressbar.Content = "0 / " + imageChunksCount;
-                await Task.Run(() => ParallelEncode());
-            }
-            catch { }
-        }
-
-        private void ButtonSaveTo_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Forms.FolderBrowserDialog browseOutputFolder = new System.Windows.Forms.FolderBrowserDialog();
-            if (browseOutputFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                imageOutput = browseOutputFolder.SelectedPath;
-                imageOutputSet = true;
-            }
-        }
-
-        private void CheckBoxCustomSettings_Checked(object sender, RoutedEventArgs e)
-        {
-            if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(true); TextBoxCustomSettings.Text = allSettingsLibavif; }
-            if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
-            if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(true); TextBoxCustomSettings.Text = allSettingsJpegxl; }
-            if (ComboBoxEncoder.SelectedIndex == 4) { SetMozjpegParams(true); TextBoxCustomSettings.Text = allSettingsMozjpeg; }
-            if (ComboBoxEncoder.SelectedIndex == 5) { SetEctParams(true); TextBoxCustomSettings.Text = allSettingsEct; }
-        }
-
-        private void ButtonOpenSource_Click(object sender, RoutedEventArgs e)
-        {
-            if (CheckBoxBatchEncoding.IsChecked == false)
-            {
-                OpenFileDialog openImageFileDialog = new OpenFileDialog();
-                openImageFileDialog.Filter = "Image Files|*.png;*.jpg;|All Files|*.*";
-                Nullable<bool> result = openImageFileDialog.ShowDialog();
-                if (result == true) { ListBoxImagesToConvert.Items.Add(openImageFileDialog.FileName); ListBoxImagesToConvert.SelectedIndex = 0; }
-            }
-            else
-            {
-                System.Windows.Forms.FolderBrowserDialog browseSourceFolder = new System.Windows.Forms.FolderBrowserDialog();
-                if (browseSourceFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    DirectoryInfo queueFiles = new DirectoryInfo(browseSourceFolder.SelectedPath);
-                    foreach (var file in queueFiles.GetFiles())
-                    {
-                        ListBoxImagesToConvert.Items.Add(file.FullName);
-                    }
-                }
-            }
-
-        }
-
-        private void ButtonRemoveFromList_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                ListBoxImagesToConvert.Items.RemoveAt(ListBoxImagesToConvert.SelectedIndex);
-            }
-            catch { }
-        }
-
-        private void ComboBoxEncoder_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            if (ComboBoxEncoder.SelectedIndex == 4)
-            {
-                foreach (var element in ListBoxImagesToConvert.Items)
-                {
-                    if (Path.GetExtension(element.ToString()) != "jpg") { wrongFormat = true; }
-                }
-                if (wrongFormat){ MessageBox.Show("You have elements in the Queue, which are not jpg/jpg. \n\nMozJpeg is only reduces file sizes of JPEG images! \n\nPlease check your Queue and remove non jpeg elements."); }
-            }
-            wrongFormat = false;
-        }
-
         private void setParams()
         {
             encoder = ComboBoxEncoder.Text;
@@ -197,6 +119,125 @@ namespace MegaPixel
             }
         }
 
+
+        private void AutoRemoveNonJpeg()
+        {
+            List<string> list = new List<string>();
+            foreach (var element in ListBoxImagesToConvert.Items)
+            {
+                if (Path.GetExtension(element.ToString()) != ".jpg" && Path.GetExtension(element.ToString()) != ".jpeg")
+                {
+                    list.Add(element.ToString());
+                }
+            }
+            foreach (var element in list)
+            {
+                ListBoxImagesToConvert.Items.Remove(element);
+            }
+        }
+
+
+        private async void ButtonStartEncoding_Click(object sender, RoutedEventArgs e)
+        {
+            setParams();
+            try
+            {
+                ProgressBar.Value = 0;
+                ProgressBar.Maximum = imageChunksCount;
+                LabelProgressbar.Content = "0 / " + imageChunksCount;
+                await Task.Run(() => ParallelEncode());
+            }
+            catch { }
+        }
+
+        private void ButtonSaveTo_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog browseOutputFolder = new System.Windows.Forms.FolderBrowserDialog();
+            if (browseOutputFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                imageOutput = browseOutputFolder.SelectedPath;
+                imageOutputSet = true;
+            }
+        }
+
+        private void CheckBoxCustomSettings_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(true); TextBoxCustomSettings.Text = allSettingsLibavif; }
+            if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
+            if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(true); TextBoxCustomSettings.Text = allSettingsJpegxl; }
+            if (ComboBoxEncoder.SelectedIndex == 4) { SetMozjpegParams(true); TextBoxCustomSettings.Text = allSettingsMozjpeg; }
+            if (ComboBoxEncoder.SelectedIndex == 5) { SetEctParams(true); TextBoxCustomSettings.Text = allSettingsEct; }
+        }
+
+        private void ButtonOpenSource_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckBoxBatchEncoding.IsChecked == false)
+            {
+                OpenFileDialog openImageFileDialog = new OpenFileDialog();
+                openImageFileDialog.Filter = "Image Files|*.png;*.jpg;|All Files|*.*";
+                Nullable<bool> result = openImageFileDialog.ShowDialog();
+                if (result == true) { ListBoxImagesToConvert.Items.Add(openImageFileDialog.FileName); ListBoxImagesToConvert.SelectedIndex = 0; }
+            }
+            else
+            {
+                System.Windows.Forms.FolderBrowserDialog browseSourceFolder = new System.Windows.Forms.FolderBrowserDialog();
+                if (browseSourceFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    DirectoryInfo queueFiles = new DirectoryInfo(browseSourceFolder.SelectedPath);
+                    foreach (var file in queueFiles.GetFiles())
+                    {
+                        ListBoxImagesToConvert.Items.Add(file.FullName);
+                    }
+                    if (ComboBoxEncoder.SelectedIndex == 4)
+                    {
+                        foreach (var element in ListBoxImagesToConvert.Items)
+                        {
+                            if (Path.GetExtension(element.ToString()) != ".jpg" && Path.GetExtension(element.ToString()) != ".jpeg") { wrongFormat = true; }
+                        }
+                        if (wrongFormat) {
+
+                            if (MessageBox.Show("You have elements in the Queue, which are not jpg/jpeg.\n\nMozJpeg only reduces file sizes of JPEG images!\n\nAuto-Remove non jpeg/jpg files from List?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                            {
+                                AutoRemoveNonJpeg();
+                            }                        
+                        }
+                    }
+                    wrongFormat = false;
+                }
+            }
+
+        }
+
+        private void ButtonRemoveFromList_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                ListBoxImagesToConvert.Items.RemoveAt(ListBoxImagesToConvert.SelectedIndex);
+            }
+            catch { }
+        }
+
+        private void ComboBoxEncoder_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (ComboBoxEncoder.SelectedIndex == 4)
+            {
+                foreach (var element in ListBoxImagesToConvert.Items)
+                {
+                    if (Path.GetExtension(element.ToString()) != ".jpg"  && Path.GetExtension(element.ToString()) != ".jpeg") { wrongFormat = true; }
+                }
+                if (wrongFormat)
+                {
+
+                    if (MessageBox.Show("You have elements in the Queue, which are not jpg/jpeg.\n\nMozJpeg only reduces file sizes of JPEG images!\n\nAuto-Remove non jpeg/jpg files from List?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                    {
+                        AutoRemoveNonJpeg();
+                    }
+                }
+            }
+            wrongFormat = false;
+        }
+
+
         private void CheckImageOutput(string Path)
         {
             if (CheckBoxRemoveFinishedItems.IsChecked == true)
@@ -206,9 +247,7 @@ namespace MegaPixel
                     try
                     {
                         ListBoxImagesToConvert.Items.Remove(Path);
-                    }
-                    catch { }
-                    
+                    } catch { }
                 }
             }
         }

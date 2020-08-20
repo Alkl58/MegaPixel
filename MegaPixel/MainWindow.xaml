@@ -10,7 +10,7 @@
 
         <Button x:Name="ButtonOpenSource" Content="Open Source" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonOpenSource_Click"/>
         <Button x:Name="ButtonSaveTo" Content="Save to..." HorizontalAlignment="Left" Margin="113,10,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonSaveTo_Click"/>
-        <Button x:Name="ButtonStartEncoding" Content="Start Encoding" HorizontalAlignment="Left" Margin="464,15,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonStartEncoding_Click"/>
+        <Button x:Name="ButtonStartEncoding" Content="Start Encoding" HorizontalAlignment="Left" Margin="464,10,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonStartEncoding_Click"/>
         <CheckBox x:Name="CheckBoxBatchEncoding" Content="Batch Add Pictures" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
         <ProgressBar x:Name="ProgressBar" HorizontalAlignment="Left" Height="27" Margin="10,383,0,0" VerticalAlignment="Top" Width="552"/>
         <Label x:Name="LabelProgressbar" Content="" HorizontalAlignment="Left" Margin="10,383,0,0" VerticalAlignment="Top" Width="552" Height="27" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
