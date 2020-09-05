@@ -19,7 +19,7 @@
         <TabControl HorizontalAlignment="Left" Height="297" Margin="10,81,0,0" VerticalAlignment="Top" Width="552">
             <TabItem Header="Queue">
                 <Grid Background="White">
-                    <ListBox x:Name="ListBoxImagesToConvert" HorizontalAlignment="Left" BorderBrush="Gray" Height="240" VerticalAlignment="Top" Width="546" Margin="0,29,0,-0.2" AllowDrop="True" DragDrop.Drop="ListBoxImagesToConvert_Drop"/>
+                    <ListBox x:Name="ListBoxImagesToConvert" SelectionMode="Multiple" HorizontalAlignment="Left" BorderBrush="Gray" Height="240" VerticalAlignment="Top" Width="546" Margin="0,29,0,-0.2" AllowDrop="True" DragDrop.Drop="ListBoxImagesToConvert_Drop"/>
                     <Button x:Name="ButtonRemoveFromList" Content="Remove" HorizontalAlignment="Left" Margin="478,2,0,0" VerticalAlignment="Top" Width="67" Background="White" Height="24" Click="ButtonRemoveFromList_Click"/>
                     <CheckBox x:Name="CheckBoxRemoveFinishedItems" Content="Remove finished Items from Queue" HorizontalAlignment="Left" Margin="5,9,0,0" VerticalAlignment="Top"/>
                 </Grid>

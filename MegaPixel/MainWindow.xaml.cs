@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -235,11 +236,9 @@ namespace MegaPixel
 
         private void ButtonRemoveFromList_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                ListBoxImagesToConvert.Items.RemoveAt(ListBoxImagesToConvert.SelectedIndex);
-            }
-            catch { }
+            //Removes every selected item from the listbox
+            var selected = ListBoxImagesToConvert.SelectedItems.Cast<Object>().ToArray();
+            foreach (var item in selected) ListBoxImagesToConvert.Items.Remove(item);
         }
 
         private void ComboBoxEncoder_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
