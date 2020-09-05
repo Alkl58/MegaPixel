@@ -136,6 +136,31 @@ namespace MegaPixel
             }
         }
 
+        private void ListBoxImagesToConvert_Drop(object sender, DragEventArgs e)
+        {
+            //Allows to drag and drop files directly into the ListBox
+            List<string> filepaths = new List<string>();
+            foreach (var s in (string[])e.Data.GetData(DataFormats.FileDrop, false))
+            {
+                if (Directory.Exists(s))
+                {
+                    //Add files from folder
+                    filepaths.AddRange(Directory.GetFiles(s));
+                }
+                else
+                {
+                    //Add filepath
+                    filepaths.Add(s);
+                }
+            }
+            foreach (string fileName in filepaths)
+            {
+                if (Path.GetExtension(fileName.ToString()) == ".jpg" || Path.GetExtension(fileName.ToString()) == ".jpeg")
+                {
+                    ListBoxImagesToConvert.Items.Add(fileName);                
+                }                
+            }
+        }
 
         private async void ButtonStartEncoding_Click(object sender, RoutedEventArgs e)
         {
