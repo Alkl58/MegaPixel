@@ -617,6 +617,7 @@
                     <Button x:Name="ButtonOpenReddit" HorizontalAlignment="Left" Margin="355,202,0,0" VerticalAlignment="Top" Width="57" Height="57" Background="White" BorderBrush="White" Click="ButtonOpenReddit_Click">
                         <Image Height="50" Width="52" Source="img/reddit.png"/>
                     </Button>
+                    <CheckBox x:Name="CheckBoxPlayFinishedSound" Content="Play finished Sound" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
                 </Grid>
             </TabItem>
 

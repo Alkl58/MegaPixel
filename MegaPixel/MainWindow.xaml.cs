@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -155,9 +156,10 @@ namespace MegaPixel
             }
             foreach (string fileName in filepaths)
             {
+                ListBoxImagesToConvert.Items.Add(fileName);
                 if (Path.GetExtension(fileName.ToString()) == ".jpg" || Path.GetExtension(fileName.ToString()) == ".jpeg")
                 {
-                    ListBoxImagesToConvert.Items.Add(fileName);                
+                                   
                 }                
             }
         }
@@ -171,6 +173,11 @@ namespace MegaPixel
                 ProgressBar.Maximum = imageChunksCount;
                 LabelProgressbar.Content = "0 / " + imageChunksCount;
                 await Task.Run(() => ParallelEncode());
+                if (CheckBoxPlayFinishedSound.IsChecked == true)
+                {
+                    SoundPlayer playSound = new SoundPlayer(Properties.Resources.finished);
+                    playSound.Play();
+                }
             }
             catch { }
         }
