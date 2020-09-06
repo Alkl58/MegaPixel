@@ -182,6 +182,7 @@ namespace MegaPixel
             if (browseOutputFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 imageOutput = browseOutputFolder.SelectedPath;
+                LabelOutput.Content = imageOutput;
                 imageOutputSet = true;
             }
         }

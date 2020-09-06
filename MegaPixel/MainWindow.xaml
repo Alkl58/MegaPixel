@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MegaPixel"
         mc:Ignorable="d"
-        Title="MegaPixel" Height="456.934" Width="583.604" ResizeMode="CanMinimize">
+        Title="MegaPixel" Height="466.267" Width="583.604" ResizeMode="CanMinimize">
     <Grid>
 
         <Button x:Name="ButtonOpenSource" Content="Open Source" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonOpenSource_Click"/>
-        <Button x:Name="ButtonSaveTo" Content="Save to..." HorizontalAlignment="Left" Margin="113,10,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonSaveTo_Click"/>
+        <Button x:Name="ButtonSaveTo" Content="Save to..." HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonSaveTo_Click"/>
         <Button x:Name="ButtonStartEncoding" Content="Start Encoding" HorizontalAlignment="Left" Margin="464,10,0,0" VerticalAlignment="Top" Width="98" Height="35" Background="White" Click="ButtonStartEncoding_Click"/>
-        <CheckBox x:Name="CheckBoxBatchEncoding" Content="Batch Add Pictures" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top"/>
-        <ProgressBar x:Name="ProgressBar" HorizontalAlignment="Left" Height="27" Margin="10,383,0,0" VerticalAlignment="Top" Width="552"/>
-        <Label x:Name="LabelProgressbar" Content="" HorizontalAlignment="Left" Margin="10,383,0,0" VerticalAlignment="Top" Width="552" Height="27" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="TextBoxWorkerCount" HorizontalAlignment="Left" Height="26" Margin="331,15,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="37" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <Label Content="Parallel Workers:" HorizontalAlignment="Left" Margin="228,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,0.578"/>
-        <TabControl HorizontalAlignment="Left" Height="297" Margin="10,81,0,0" VerticalAlignment="Top" Width="552">
+        <CheckBox x:Name="CheckBoxBatchEncoding" Content="Batch Add Pictures" HorizontalAlignment="Left" Margin="113,21,0,0" VerticalAlignment="Top"/>
+        <ProgressBar x:Name="ProgressBar" HorizontalAlignment="Left" Height="27" Margin="10,394,0,0" VerticalAlignment="Top" Width="552"/>
+        <Label x:Name="LabelProgressbar" Content="" HorizontalAlignment="Left" Margin="10,394,0,0" VerticalAlignment="Top" Width="552" Height="27" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="TextBoxWorkerCount" HorizontalAlignment="Left" Height="26" Margin="384,15,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="37" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Parallel Workers:" HorizontalAlignment="Left" Margin="287,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,0.578"/>
+        <TabControl HorizontalAlignment="Left" Height="297" Margin="10,92,0,0" VerticalAlignment="Top" Width="552">
             <TabItem Header="Queue">
                 <Grid Background="White">
                     <ListBox x:Name="ListBoxImagesToConvert" SelectionMode="Multiple" HorizontalAlignment="Left" BorderBrush="Gray" Height="240" VerticalAlignment="Top" Width="546" Margin="0,29,0,-0.2" AllowDrop="True" DragDrop.Drop="ListBoxImagesToConvert_Drop"/>
@@ -613,6 +613,8 @@
 
 
         </TabControl>
+        <Label Content="Output:" HorizontalAlignment="Left" Margin="110,55,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.473,0.462"/>
+        <Label x:Name="LabelOutput" Content="Same as Source" HorizontalAlignment="Left" Margin="158,55,0,0" VerticalAlignment="Top" Width="404" FontStyle="Italic"/>
 
     </Grid>
 </Window>
