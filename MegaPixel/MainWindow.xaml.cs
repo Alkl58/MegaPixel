@@ -120,7 +120,6 @@ namespace MegaPixel
             }
         }
 
-
         private void AutoRemoveNonJpeg()
         {
             List<string> list = new List<string>();
@@ -242,6 +241,21 @@ namespace MegaPixel
             foreach (var item in selected) ListBoxImagesToConvert.Items.Remove(item);
         }
 
+        private void ButtonOpenGithubPage_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://github.com/Alkl58/MegaPixel");
+        }
+
+        private void ButtonOpenDiscord_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://discord.gg/HSBxne3");
+        }
+
+        private void ButtonOpenReddit_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("https://www.reddit.com/user/Al_kl");
+        }
+
         private void ComboBoxEncoder_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             if (ComboBoxEncoder.SelectedIndex == 4)
@@ -261,7 +275,6 @@ namespace MegaPixel
             }
             wrongFormat = false;
         }
-
 
         private void CheckImageOutput(string Path)
         {
@@ -354,6 +367,5 @@ namespace MegaPixel
                 Task.WaitAll(tasks.ToArray());
             }
         }
-
     }
 }

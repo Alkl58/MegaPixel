@@ -607,7 +607,16 @@
             </TabItem>
             <TabItem Header="Program">
                 <Grid Background="White">
-                    <TextBox HorizontalAlignment="Left" Height="38" Margin="10,10,0,0" TextWrapping="Wrap" Text="Version: 0.1&#xD;&#xA;Github: https://github.com/Alkl58/MegaPixel" VerticalAlignment="Top" Width="244" IsReadOnly="True" BorderBrush="White"/>
+                    <TextBox HorizontalAlignment="Left" Height="20" Margin="463,10,0,0" TextWrapping="Wrap" Text="Version: 0.1" VerticalAlignment="Top" Width="73" IsReadOnly="True" BorderBrush="White"/>
+                    <Button x:Name="ButtonOpenGithubPage" HorizontalAlignment="Left" Margin="479,202,0,0" VerticalAlignment="Top" Width="57" Height="57" Background="White" BorderBrush="White" Click="ButtonOpenGithubPage_Click">
+                        <Image Height="54" Width="54" Source="img/github.png"/>
+                    </Button>
+                    <Button x:Name="ButtonOpenDiscord" HorizontalAlignment="Left" Margin="417,202,0,0" VerticalAlignment="Top" Width="57" Height="57" Background="White" BorderBrush="White" Click="ButtonOpenDiscord_Click">
+                        <Image Height="54" Width="54" Source="img/discord.png"/>
+                    </Button>
+                    <Button x:Name="ButtonOpenReddit" HorizontalAlignment="Left" Margin="355,202,0,0" VerticalAlignment="Top" Width="57" Height="57" Background="White" BorderBrush="White" Click="ButtonOpenReddit_Click">
+                        <Image Height="50" Width="52" Source="img/reddit.png"/>
+                    </Button>
                 </Grid>
             </TabItem>
 
