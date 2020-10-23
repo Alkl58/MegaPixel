@@ -26,17 +26,17 @@
             </TabItem>
             <TabItem Header="Settings">
                 <Grid Background="White">
-                    <Label Content="Quality:" Margin="10,46,480.4,198.8">
+                    <Label Content="Quality:" Margin="10,46,480,197">
                         <Label.Style>
                             <Style>
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                     <DataTrigger
-                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -44,7 +44,8 @@
                         </Label.Style>
                     </Label>
                     <ComboBox x:Name="ComboBoxEncoder" HorizontalAlignment="Left" Margin="71,10,0,0" VerticalAlignment="Top" Width="110" Height="26" SelectionChanged="ComboBoxEncoder_SelectionChanged">
-                        <ComboBoxItem Content="avif" IsSelected="True"/>
+                        <ComboBoxItem Content="avif (aom)" IsSelected="True"/>
+                        <ComboBoxItem Content="cavif (rav1e)"/>
                         <ComboBoxItem Content="webp"/>
                         <ComboBoxItem Content="jpegxl"/>
                         <ComboBoxItem Content="jpegxl decoder"/>
@@ -88,7 +89,7 @@
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                     <DataTrigger
-                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -345,11 +346,11 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                     <DataTrigger
-                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                      Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -362,7 +363,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -381,7 +382,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -394,7 +395,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -407,7 +408,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -427,59 +428,67 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </CheckBox.Style>
                     </CheckBox>
-                    <Label Content="Quality:" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top">
+                    <Label Content="Quality:" HorizontalAlignment="Left" Margin="10,46,0,0" VerticalAlignment="Top">
                         <Label.Style>
                             <Style>
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="3">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Label.Style>
                     </Label>
-                    <TextBox x:Name="TextBoxJpegxlQuality" HorizontalAlignment="Left" Height="26" Margin="71,54,0,0" TextWrapping="Wrap" Text="75" VerticalAlignment="Top" Width="68" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                    <TextBox x:Name="TextBoxJpegxlQuality" HorizontalAlignment="Left" Height="26" Margin="71,46,0,0" TextWrapping="Wrap" Text="75" VerticalAlignment="Top" Width="68" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                         <TextBox.Style>
                             <Style>
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="3">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </TextBox.Style>
                     </TextBox>
-                    <Label Content="Speed:" HorizontalAlignment="Left" Margin="191,54,0,0" VerticalAlignment="Top">
+                    <Label Content="Speed:" HorizontalAlignment="Left" Margin="169,46,0,0" VerticalAlignment="Top">
                         <Label.Style>
                             <Style>
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="3">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Label.Style>
                     </Label>
-                    <ComboBox x:Name="ComboBoxJpegxlSpeed" HorizontalAlignment="Left" Margin="252,54,0,0" VerticalAlignment="Top" Width="69" Height="26" ToolTip="Encoder effort/speed setting - 3 = fastest |  9 = slowest | Default: 7">
+                    <ComboBox x:Name="ComboBoxJpegxlSpeed" HorizontalAlignment="Left" Margin="225,46,0,0" VerticalAlignment="Top" Width="69" Height="26" ToolTip="Encoder effort/speed setting - 3 = fastest |  9 = slowest | Default: 7">
                         <ComboBox.Style>
                             <Style>
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="3">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -499,7 +508,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="6">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -512,7 +521,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="6">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -534,7 +543,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="6">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -547,7 +556,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -560,7 +569,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -573,7 +582,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -586,7 +595,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="2">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -609,7 +618,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -622,7 +631,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -639,7 +648,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -652,7 +661,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -665,7 +674,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -678,7 +687,7 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
@@ -697,13 +706,49 @@
                                 <Setter Property="UIElement.Visibility" Value="Collapsed"/>
                                 <Style.Triggers>
                                     <DataTrigger
-                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="5">
                                         <Setter Property="UIElement.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </CheckBox.Style>
                     </CheckBox>
+                    <Label Content="Speed:" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxCavifSpeed" HorizontalAlignment="Left" Margin="71,82,0,0" VerticalAlignment="Top" Width="68" Height="26">
+                        <ComboBoxItem Content="1" IsSelected="True"/>
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="3"/>
+                        <ComboBoxItem Content="4"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="6"/>
+                        <ComboBoxItem Content="7"/>
+                        <ComboBoxItem Content="8"/>
+                        <ComboBoxItem Content="9"/>
+                        <ComboBoxItem Content="10"/>
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="1">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Program">

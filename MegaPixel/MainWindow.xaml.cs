@@ -14,7 +14,7 @@ namespace MegaPixel
 {
     public partial class MainWindow : Window
     {
-        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl, allSettingsMozjpeg, allSettingsEct;
+        public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl, allSettingsMozjpeg, allSettingsEct, allSettingsCavif;
         public int workerCount, imageChunksCount;
         public bool imageOutputSet, wrongFormat;
 
@@ -33,10 +33,11 @@ namespace MegaPixel
                 imageChunksCount += 1;
             }
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(false); }
-            if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(false); }
-            if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(false); }
-            if (ComboBoxEncoder.SelectedIndex == 4) { SetMozjpegParams(false); }
-            if (ComboBoxEncoder.SelectedIndex == 5) { SetEctParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 1) { SetCavifParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 2) { SetWebpParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 3) { SetJpegxlParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 5) { SetMozjpegParams(false); }
+            if (ComboBoxEncoder.SelectedIndex == 6) { SetEctParams(false); }
         }
 
         private void SetLibavifParams(bool temp)
@@ -55,6 +56,18 @@ namespace MegaPixel
                 {
                     allSettingsLibavif = "--speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --min " + TextBoxAvifMinQ.Text + " --max " + TextBoxAvifMaxQ.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text;
                 }
+            }
+        }
+
+        private void SetCavifParams(bool temp)
+        {
+            if (CheckBoxCustomSettings.IsChecked == true && temp == false)
+            {
+                allSettingsCavif = TextBoxCustomSettings.Text;
+            }
+            else
+            {
+                allSettingsCavif = "--quality=" + TextBoxJpegxlQuality.Text + " --speed=" + ComboBoxCavifSpeed.Text;
             }
         }
 
@@ -198,10 +211,11 @@ namespace MegaPixel
         private void CheckBoxCustomSettings_Checked(object sender, RoutedEventArgs e)
         {
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(true); TextBoxCustomSettings.Text = allSettingsLibavif; }
-            if (ComboBoxEncoder.SelectedIndex == 1) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
-            if (ComboBoxEncoder.SelectedIndex == 2) { SetJpegxlParams(true); TextBoxCustomSettings.Text = allSettingsJpegxl; }
-            if (ComboBoxEncoder.SelectedIndex == 4) { SetMozjpegParams(true); TextBoxCustomSettings.Text = allSettingsMozjpeg; }
-            if (ComboBoxEncoder.SelectedIndex == 5) { SetEctParams(true); TextBoxCustomSettings.Text = allSettingsEct; }
+            if (ComboBoxEncoder.SelectedIndex == 1) { SetCavifParams(true); TextBoxCustomSettings.Text = allSettingsCavif; }
+            if (ComboBoxEncoder.SelectedIndex == 2) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
+            if (ComboBoxEncoder.SelectedIndex == 3) { SetJpegxlParams(true); TextBoxCustomSettings.Text = allSettingsJpegxl; }
+            if (ComboBoxEncoder.SelectedIndex == 5) { SetMozjpegParams(true); TextBoxCustomSettings.Text = allSettingsMozjpeg; }
+            if (ComboBoxEncoder.SelectedIndex == 6) { SetEctParams(true); TextBoxCustomSettings.Text = allSettingsEct; }
         }
 
         private void ButtonOpenSource_Click(object sender, RoutedEventArgs e)
@@ -330,9 +344,13 @@ namespace MegaPixel
                             
                             switch (encoder)
                             {
-                                case "avif":
+                                case "avif (aom)":
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "avif");
                                     startInfo.Arguments = "/C avifenc.exe " + '\u0022' + items + '\u0022' + " " + allSettingsLibavif + " " + '\u0022' + imageOutputTemp + "avif" + '\u0022';
+                                    break;
+                                case "cavif (rav1e)":
+                                    startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "cavif");
+                                    startInfo.Arguments = "/C cavif.exe " + allSettingsCavif + " -o " + '\u0022' + imageOutputTemp + "avif" + '\u0022' + " " + '\u0022' + items + '\u0022';
                                     break;
                                 case "webp":
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "webp");
