@@ -48,7 +48,7 @@
                         <ComboBoxItem Content="webp"/>
                         <ComboBoxItem Content="jpegxl"/>
                         <ComboBoxItem Content="jpegxl decoder"/>
-                        <ComboBoxItem Content="mozjpeg" />
+                        <ComboBoxItem Content="mozjpeg"/>
                         <ComboBoxItem Content="ect"/>
                     </ComboBox>
                     <Label Content="Encoder:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -603,6 +603,107 @@
                         <ComboBoxItem Content="1"/>
                         <ComboBoxItem Content="0"/>
                     </ComboBox>
+                    <Label Content="Tune:" Margin="10,82,480,163">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxMozjpegTune" HorizontalAlignment="Left" Margin="71,82,0,0" VerticalAlignment="Top" Width="110" Height="26">
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                        <ComboBoxItem Content="tune-psnr"/>
+                        <ComboBoxItem Content="tune-hvs-psnr" IsSelected="True"/>
+                        <ComboBoxItem Content="tune-ssim"/>
+                        <ComboBoxItem Content="tune-ms-ssim"/>
+                    </ComboBox>
+                    <Label Content="Smoothing:" Margin="212,47,262,192">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <TextBox x:Name="TextBoxMozjpegSmoothing" HorizontalAlignment="Left" Height="26" Margin="330,49,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="58" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                        <TextBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                    <Label Content="Quantization table:" Margin="212,80,220,159">
+                        <Label.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Label.Style>
+                    </Label>
+                    <ComboBox x:Name="ComboBoxMozjpegQuantTable" HorizontalAlignment="Left" Margin="331,82,0,0" VerticalAlignment="Top" Width="206" Height="26">
+                        <ComboBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                        <ComboBoxItem Content="JPEG Annex K"/>
+                        <ComboBoxItem Content="Flat"/>
+                        <ComboBoxItem Content="Custom, tuned for MS-SSIM"/>
+                        <ComboBoxItem Content="ImageMagick table by N. Robidoux"/>
+                        <ComboBoxItem Content="Custom, tuned for PSNR-HVS"  IsSelected="True"/>
+                        <ComboBoxItem Content="Table from paper by Klein, Silverstein and Carney"/>
+                    </ComboBox>
+                    <CheckBox x:Name="CheckBoxMozjpegQuant" Content="" HorizontalAlignment="Left" Margin="197,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.467,0.422">
+                        <CheckBox.Style>
+                            <Style>
+                                <Setter Property="UIElement.Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding SelectedIndex, ElementName=ComboBoxEncoder}" Value="4">
+                                        <Setter Property="UIElement.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </CheckBox.Style>
+                    </CheckBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Program">

@@ -105,7 +105,9 @@ namespace MegaPixel
             }
             else
             {
-                allSettingsMozjpeg = "-quality " + TextBoxWebpQuality.Text;
+                string quant;
+                if(CheckBoxMozjpegQuant.IsChecked == true) { quant = " -quant-table " + ComboBoxMozjpegQuantTable.SelectedIndex; } else { quant = ""; }
+                allSettingsMozjpeg = "-quality " + TextBoxWebpQuality.Text + " -" + ComboBoxMozjpegTune.Text + " -smooth " + TextBoxMozjpegSmoothing.Text + quant;
             }
         }
 
@@ -157,10 +159,10 @@ namespace MegaPixel
             foreach (string fileName in filepaths)
             {
                 ListBoxImagesToConvert.Items.Add(fileName);
-                if (Path.GetExtension(fileName.ToString()) == ".jpg" || Path.GetExtension(fileName.ToString()) == ".jpeg")
-                {
-                                   
-                }                
+                //if (Path.GetExtension(fileName.ToString()) == ".jpg" || Path.GetExtension(fileName.ToString()) == ".jpeg")
+                //{
+                //                   
+                //}                
             }
         }
 
@@ -346,7 +348,7 @@ namespace MegaPixel
                                     break;
                                 case "mozjpeg":
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "mozjpeg");
-                                    startInfo.Arguments = "/C cjpeg.exe " + allSettingsMozjpeg + " " +'\u0022' + items + '\u0022' + " > " + '\u0022' + imageOutputTemp + "jpg" + '\u0022';
+                                    startInfo.Arguments = "/C cjpeg.exe " + allSettingsMozjpeg + " -outfile " + '\u0022' + imageOutputTemp + "jpg" + '\u0022' + " " + '\u0022' + items + '\u0022';
                                     break;
                                 case "ect":
                                     startInfo.WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Encoders", "ect");
