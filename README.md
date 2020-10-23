@@ -1,5 +1,5 @@
 # MegaPixel
-GUI for avif, webp, jpegxl, mozjpg and ect
+GUI for avif, cavif, webp, jpegxl, mozjpg and ect
 
 ![image](https://i.imgur.com/Cq5JgUe.png)
 
