@@ -25,13 +25,17 @@ namespace MegaPixel
 
         private void setParams()
         {
+            // Set Encoder
             encoder = ComboBoxEncoder.Text;
-            workerCount = Int16.Parse(TextBoxWorkerCount.Text);
+            // Set Workercount
+            workerCount = int.Parse(TextBoxWorkerCount.Text);
             imageChunksCount = 0;
+            // Count number of images
             foreach (var file in ListBoxImagesToConvert.Items)
             {
                 imageChunksCount += 1;
             }
+            // Set Encoder Params
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(false); }
             if (ComboBoxEncoder.SelectedIndex == 1) { SetCavifParams(false); }
             if (ComboBoxEncoder.SelectedIndex == 2) { SetWebpParams(false); }
@@ -42,27 +46,46 @@ namespace MegaPixel
 
         private void SetLibavifParams(bool temp)
         {
+            // Avifenc Settings
             if (CheckBoxCustomSettings.IsChecked == true && temp == false)
             {
+                // Custom Settings
                 allSettingsLibavif = TextBoxCustomSettings.Text;
             }
             else
             {
                 if (CheckBoxAvifLossless.IsChecked == true)
                 {
-                    allSettingsLibavif = "--lossless --speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text;
+                    allSettingsLibavif = " --lossless ";                                        // Lossless
+                    allSettingsLibavif += " --speed " + ComboBoxAvifSpeed.Text;                 // Speed
+                    allSettingsLibavif += " --jobs " + TextBoxAvifThreads.Text;                 // Threads
+                    allSettingsLibavif += " --depth " + ComboBoxAvifDepth.Text;                 // Bit-Depth
+                    allSettingsLibavif += " --yuv " + ComboBoxAvifColorFormat.Text;             // Color Space
+                    allSettingsLibavif += " --range " + ComboBoxAvifColorRange.Text;            // Color Range
+                    allSettingsLibavif += " --tilerowslog2 " + ComboBoxAvifTileRows.Text;       // Tile Rows
+                    allSettingsLibavif += " --tilecolslog2 " + ComboBoxAvifTileColumns.Text;    // Tile Columns
                 }
                 else
                 {
-                    allSettingsLibavif = "--speed " + ComboBoxAvifSpeed.Text + " --jobs " + TextBoxAvifThreads.Text + " --depth " + ComboBoxAvifDepth.Text + " --yuv " + ComboBoxAvifColorFormat.Text + " --range " + ComboBoxAvifColorRange.Text + " --min " + TextBoxAvifMinQ.Text + " --max " + TextBoxAvifMaxQ.Text + " --tilerowslog2 " + ComboBoxAvifTileRows.Text + " --tilecolslog2 " + ComboBoxAvifTileColumns.Text;
+                    allSettingsLibavif = " --min " + TextBoxAvifMinQ.Text;                      // Min-Q
+                    allSettingsLibavif += " --max " + TextBoxAvifMaxQ.Text;                     // Max-Q
+                    allSettingsLibavif += " --speed " + ComboBoxAvifSpeed.Text;                 // Speed
+                    allSettingsLibavif += " --jobs " + TextBoxAvifThreads.Text;                 // Threads
+                    allSettingsLibavif += " --depth " + ComboBoxAvifDepth.Text;                 // Bit-Depth
+                    allSettingsLibavif += " --yuv " + ComboBoxAvifColorFormat.Text;             // Color Space
+                    allSettingsLibavif += " --range " + ComboBoxAvifColorRange.Text;            // Color Range
+                    allSettingsLibavif += " --tilerowslog2 " + ComboBoxAvifTileRows.Text;       // Tile Rows
+                    allSettingsLibavif += " --tilecolslog2 " + ComboBoxAvifTileColumns.Text;    // Tile Columns
                 }
             }
         }
 
         private void SetCavifParams(bool temp)
         {
+            // Cavif Settings
             if (CheckBoxCustomSettings.IsChecked == true && temp == false)
             {
+                // Custom Settings
                 allSettingsCavif = TextBoxCustomSettings.Text;
             }
             else
@@ -73,35 +96,47 @@ namespace MegaPixel
 
         private void SetWebpParams(bool temp)
         {
+            // WebP Settings
             if (CheckBoxCustomSettings.IsChecked == true && temp == false)
             {
+                // Custom Settings
                 allSettingsWebp = TextBoxCustomSettings.Text;
             }
             else
             {
                 if (CheckBoxWebpNearLossless.IsChecked == true)
                 {
-                    allSettingsWebp = "-preset " + ComboBoxWebpPreset.Text + " -near_lossless " + TextBoxWebpNearLossless.Text + " -z " + ComboBoxWebpLosslessPreset.Text;
+                    // Near Lossless
+                    allSettingsWebp = " -preset " + ComboBoxWebpPreset.Text;                // Preset
+                    allSettingsWebp += " -near_lossless " + TextBoxWebpNearLossless.Text;   // Near Lossless
+                    allSettingsWebp += " -z " + ComboBoxWebpLosslessPreset.Text;            // Lossless Preset
                 }
                 else if (CheckBoxAvifLossless.IsChecked == true)
                 {
-                    allSettingsWebp = "-preset " + ComboBoxWebpPreset.Text + " -lossless -m " + ComboBoxWebpSpeed.SelectedIndex;
+                    // Lossless
+                    allSettingsWebp = " -preset " + ComboBoxWebpPreset.Text;                // Preset
+                    allSettingsWebp += " -lossless ";                                       // Lossless
+                    allSettingsWebp += " -m " + ComboBoxWebpSpeed.SelectedIndex;            // Speed
                 }
                 else
                 {
-                    allSettingsWebp = "-preset " + ComboBoxWebpPreset.Text + " -q " + TextBoxWebpQuality.Text + " -m " + ComboBoxWebpSpeed.SelectedIndex;
+                    allSettingsWebp = " -preset " + ComboBoxWebpPreset.Text;                // Preset
+                    allSettingsWebp += " -q " + TextBoxWebpQuality.Text;                    // Quality
+                    allSettingsWebp += " -m " + ComboBoxWebpSpeed.SelectedIndex;            // Speed
                 }
                 if (CheckBoxWebpMultiThreading.IsChecked == true)
                 {
-                    allSettingsWebp += " -mt";
+                    allSettingsWebp += " -mt";                                              // Multi-Threading
                 }
             }
         }
 
         private void SetJpegxlParams(bool temp)
         {
+            // JpegXl Settings
             if (CheckBoxCustomSettings.IsChecked == true && temp == false)
             {
+                // Custom Settings
                 allSettingsJpegxl = TextBoxCustomSettings.Text;
             }
             else
@@ -112,20 +147,29 @@ namespace MegaPixel
 
         private void SetMozjpegParams(bool temp)
         {
+            // Mozjpeg Settings
             if (CheckBoxCustomSettings.IsChecked == true && temp == false)
             {
+                // Custom Settings
                 allSettingsMozjpeg = TextBoxCustomSettings.Text;
             }
             else
             {
                 string quant;
-                if(CheckBoxMozjpegQuant.IsChecked == true) { quant = " -quant-table " + ComboBoxMozjpegQuantTable.SelectedIndex; } else { quant = ""; }
+                if(CheckBoxMozjpegQuant.IsChecked == true) 
+                { 
+                    quant = " -quant-table " + ComboBoxMozjpegQuantTable.SelectedIndex; 
+                } else 
+                { 
+                    quant = ""; 
+                }
                 allSettingsMozjpeg = "-quality " + TextBoxWebpQuality.Text + " -" + ComboBoxMozjpegTune.Text + " -smooth " + TextBoxMozjpegSmoothing.Text + quant;
             }
         }
 
         private void SetEctParams(bool temp)
         {
+            // ECT Settings
             if (CheckBoxCustomSettings.IsChecked == true && temp == false)
             {
                 allSettingsEct = TextBoxCustomSettings.Text;
@@ -171,11 +215,7 @@ namespace MegaPixel
             }
             foreach (string fileName in filepaths)
             {
-                ListBoxImagesToConvert.Items.Add(fileName);
-                //if (Path.GetExtension(fileName.ToString()) == ".jpg" || Path.GetExtension(fileName.ToString()) == ".jpeg")
-                //{
-                //                   
-                //}                
+                ListBoxImagesToConvert.Items.Add(fileName);            
             }
         }
 
@@ -199,6 +239,7 @@ namespace MegaPixel
 
         private void ButtonSaveTo_Click(object sender, RoutedEventArgs e)
         {
+            // Set Output Path
             System.Windows.Forms.FolderBrowserDialog browseOutputFolder = new System.Windows.Forms.FolderBrowserDialog();
             if (browseOutputFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -210,6 +251,7 @@ namespace MegaPixel
 
         private void CheckBoxCustomSettings_Checked(object sender, RoutedEventArgs e)
         {
+            // Set Custom Settings Box
             if (ComboBoxEncoder.SelectedIndex == 0) { SetLibavifParams(true); TextBoxCustomSettings.Text = allSettingsLibavif; }
             if (ComboBoxEncoder.SelectedIndex == 1) { SetCavifParams(true); TextBoxCustomSettings.Text = allSettingsCavif; }
             if (ComboBoxEncoder.SelectedIndex == 2) { SetWebpParams(true); TextBoxCustomSettings.Text = allSettingsWebp; }
@@ -220,8 +262,10 @@ namespace MegaPixel
 
         private void ButtonOpenSource_Click(object sender, RoutedEventArgs e)
         {
+            // Set Input
             if (CheckBoxBatchEncoding.IsChecked == false)
             {
+                // Single File Input
                 OpenFileDialog openImageFileDialog = new OpenFileDialog();
                 openImageFileDialog.Filter = "Image Files|*.png;*.jpg;|All Files|*.*";
                 Nullable<bool> result = openImageFileDialog.ShowDialog();
@@ -229,6 +273,7 @@ namespace MegaPixel
             }
             else
             {
+                // Batch Input
                 System.Windows.Forms.FolderBrowserDialog browseSourceFolder = new System.Windows.Forms.FolderBrowserDialog();
                 if (browseSourceFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -301,6 +346,7 @@ namespace MegaPixel
 
         private void CheckImageOutput(string Path)
         {
+            // Removes Finished Items from List
             if (CheckBoxRemoveFinishedItems.IsChecked == true)
             {
                 if (File.Exists(Path))
