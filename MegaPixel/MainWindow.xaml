@@ -764,6 +764,7 @@
                         <Image Height="50" Width="52" Source="img/reddit.png"/>
                     </Button>
                     <CheckBox x:Name="CheckBoxPlayFinishedSound" Content="Play finished Sound" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" IsChecked="True"/>
+                    <CheckBox x:Name="CheckBoxBatchSubfolders" Content="Batch with Subfolders" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top" IsChecked="True"/>
                 </Grid>
             </TabItem>
 

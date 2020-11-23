@@ -15,8 +15,9 @@ namespace MegaPixel
     public partial class MainWindow : Window
     {
         public string imageOutput, encoder, allSettingsLibavif, allSettingsWebp, allSettingsJpegxl, allSettingsMozjpeg, allSettingsEct, allSettingsCavif;
+        public string tempInput;
         public int workerCount, imageChunksCount;
-        public bool imageOutputSet, wrongFormat;
+        public bool imageOutputSet, wrongFormat, subFolders;
 
         public MainWindow()
         {
@@ -30,6 +31,7 @@ namespace MegaPixel
             // Set Workercount
             workerCount = int.Parse(TextBoxWorkerCount.Text);
             imageChunksCount = 0;
+            subFolders = CheckBoxBatchSubfolders.IsChecked == true;
             // Count number of images
             foreach (var file in ListBoxImagesToConvert.Items)
             {
@@ -204,8 +206,24 @@ namespace MegaPixel
             {
                 if (Directory.Exists(s))
                 {
-                    //Add files from folder
-                    filepaths.AddRange(Directory.GetFiles(s));
+                    if (CheckBoxBatchSubfolders.IsChecked == false)
+                    {
+                        //Add files from folder
+                        filepaths.AddRange(Directory.GetFiles(s));
+                    }
+                    else
+                    {
+                        //Add files from folder and subfolder
+                        tempInput = s;
+                        string[] allfiles = Directory.GetFiles(s, "*.*", SearchOption.AllDirectories);
+                        foreach (var file in allfiles)
+                        {
+                            if (Path.GetExtension(file.ToString()) == ".jpg" || Path.GetExtension(file.ToString()) == ".jpeg" || Path.GetExtension(file.ToString()) == ".png")
+                            {
+                                filepaths.Add(file);
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -274,29 +292,51 @@ namespace MegaPixel
             else
             {
                 // Batch Input
-                System.Windows.Forms.FolderBrowserDialog browseSourceFolder = new System.Windows.Forms.FolderBrowserDialog();
-                if (browseSourceFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (CheckBoxBatchSubfolders.IsChecked == false)
                 {
-                    DirectoryInfo queueFiles = new DirectoryInfo(browseSourceFolder.SelectedPath);
-                    foreach (var file in queueFiles.GetFiles())
+                    // Batch without Subfolders
+                    System.Windows.Forms.FolderBrowserDialog browseSourceFolder = new System.Windows.Forms.FolderBrowserDialog();
+                    if (browseSourceFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        ListBoxImagesToConvert.Items.Add(file.FullName);
-                    }
-                    if (ComboBoxEncoder.SelectedIndex == 4)
-                    {
-                        foreach (var element in ListBoxImagesToConvert.Items)
+                        DirectoryInfo queueFiles = new DirectoryInfo(browseSourceFolder.SelectedPath);
+                        foreach (var file in queueFiles.GetFiles())
                         {
-                            if (Path.GetExtension(element.ToString()) != ".jpg" && Path.GetExtension(element.ToString()) != ".jpeg") { wrongFormat = true; }
+                            ListBoxImagesToConvert.Items.Add(file.FullName);
                         }
-                        if (wrongFormat) {
-
-                            if (MessageBox.Show("You have elements in the Queue, which are not jpg/jpeg.\n\nMozJpeg only reduces file sizes of JPEG images!\n\nAuto-Remove non jpeg/jpg files from List?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                        if (ComboBoxEncoder.SelectedIndex == 4)
+                        {
+                            foreach (var element in ListBoxImagesToConvert.Items)
                             {
-                                AutoRemoveNonJpeg();
-                            }                        
+                                if (Path.GetExtension(element.ToString()) != ".jpg" && Path.GetExtension(element.ToString()) != ".jpeg") { wrongFormat = true; }
+                            }
+                            if (wrongFormat)
+                            {
+
+                                if (MessageBox.Show("You have elements in the Queue, which are not jpg/jpeg.\n\nMozJpeg only reduces file sizes of JPEG images!\n\nAuto-Remove non jpeg/jpg files from List?", "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                                {
+                                    AutoRemoveNonJpeg();
+                                }
+                            }
+                        }
+                        wrongFormat = false;
+                    }
+                }
+                else
+                {
+                    // Batch with Subfolders
+                    System.Windows.Forms.FolderBrowserDialog browseSourceFolder = new System.Windows.Forms.FolderBrowserDialog();
+                    if (browseSourceFolder.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        tempInput = browseSourceFolder.SelectedPath;
+                        string[] allfiles = Directory.GetFiles(browseSourceFolder.SelectedPath, "*.*", SearchOption.AllDirectories);
+                        foreach (var file in allfiles)
+                        {
+                            if (Path.GetExtension(file.ToString()) == ".jpg" || Path.GetExtension(file.ToString()) == ".jpeg" || Path.GetExtension(file.ToString()) == ".png")
+                            {
+                                ListBoxImagesToConvert.Items.Add(file);
+                            }
                         }
                     }
-                    wrongFormat = false;
                 }
             }
 
@@ -374,7 +414,23 @@ namespace MegaPixel
                     else
                     {
                         string imageName = Path.GetFileNameWithoutExtension(items.ToString());
-                        imageOutputTemp = Path.Combine(imageOutput, imageName + ".");
+                        if (subFolders == true)
+                        {
+                            int n = tempInput.Length;
+                            string sub = items.ToString().Substring(n, items.ToString().Length - n); // \a\anime-pictures.net-628630.jpg
+                            string tempFileName = Path.GetFileName(items.ToString());
+                            n = tempFileName.Length;
+                            sub = sub.Remove(sub.Length - n);
+                            if (Directory.Exists(imageOutput + sub) == false)
+                            {
+                                Directory.CreateDirectory(imageOutput + sub);
+                            }
+                            imageOutputTemp = Path.Combine(imageOutput + sub, imageName + ".");
+                        }
+                        else
+                        {
+                            imageOutputTemp = Path.Combine(imageOutput, imageName + ".");
+                        }
                     }
 
                     concurrencySemaphore.Wait();
