@@ -1,9 +1,11 @@
-# MegaPixel
+## Discontinued, please check out the new repository: https://github.com/Alkl58/MegaPixel-Qt
+
+### MegaPixel
 GUI for avif, cavif, webp, jpegxl, mozjpg and ect
 
 ![image](https://i.imgur.com/Cq5JgUe.png)
 
-### System Requirements:
+#### System Requirements:
 - [Microsoft .NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework/net472)
 - [Microsoft Visual C++ Redistributable x64](https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads)
 
